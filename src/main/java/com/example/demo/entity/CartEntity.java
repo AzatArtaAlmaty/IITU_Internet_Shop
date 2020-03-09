@@ -20,8 +20,8 @@ public class CartEntity {
     @Column(nullable = false)
     private Integer cost;
 
-    @ManyToMany
-    private List<ItemEntity> items;
+    @OneToMany(mappedBy = "cart")
+    private List<CartItems> items;
 
     @ManyToOne
     private UserEntity user;

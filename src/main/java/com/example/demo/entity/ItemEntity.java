@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +24,9 @@ public class ItemEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
+
+    @OneToMany(mappedBy = "item")
+    private List<CartItems> cart;
 
     @Lob
     private byte[] image;
