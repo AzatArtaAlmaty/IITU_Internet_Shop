@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,8 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "usr")
-@Getter
-@Setter
+@Data
 public class UserEntity {
     @Id
     @GeneratedValue(generator = "uuid2")

@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,8 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "cart")
-@Getter
-@Setter
+@Data
 public class CartEntity {
     @Id
     @GeneratedValue(generator = "uuid2")

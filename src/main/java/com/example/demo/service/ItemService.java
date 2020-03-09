@@ -45,7 +45,7 @@ public class ItemService {
     }
 
     @Transactional
-    public ItemDto getItem(UUID id){
+    public ItemDto getItem(UUID id) {
         ItemEntity item = itemRepo.findById(id).get();
         ItemDto sample = new ItemDto();
         sample.setId(item.getId());
