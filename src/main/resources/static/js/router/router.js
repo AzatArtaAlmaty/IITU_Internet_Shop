@@ -13,6 +13,8 @@ const routes = [
     { path: '/login', name: "auth", component: auth },
     { path: '/admin', name: "admin", component: admin },
     { path: '/cart', name: "cart", component: cart },
+    // { path: '/404', name: '404', component: NotFound },
+    { path: '*', redirect: '/404'},
 ]
 
 export default new VueRouter({
