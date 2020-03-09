@@ -14,7 +14,7 @@ const routes = [
     { path: '/admin', name: "admin", component: admin },
     { path: '/cart', name: "cart", component: cart },
     // { path: '/404', name: '404', component: NotFound },
-    { path: '*', redirect: '/404'},
+    // { path: '*', redirect: '/404'},
 ]
 
 export default new VueRouter({
