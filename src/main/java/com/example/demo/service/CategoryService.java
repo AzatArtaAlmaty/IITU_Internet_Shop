@@ -46,7 +46,7 @@ public class CategoryService {
                 dto1.setCategory(categoryDto);
                 dto1.setName(itemEntity.getName());
                 dto1.setPrice(itemEntity.getPrice());
-                dto1.setImage(itemEntity.getImage());
+//                dto1.setImage(itemEntity.getImage());
                 itemDtoList.add(dto1);
             }
             dto.setItems(itemDtoList);
@@ -85,7 +85,7 @@ public class CategoryService {
             dto1.setCategory(categoryDto);
             dto1.setName(itemEntity.getName());
             dto1.setPrice(itemEntity.getPrice());
-            dto1.setImage(itemEntity.getImage());
+//            dto1.setImage(itemEntity.getImage());
             itemDtoList.add(dto1);
         }
         dto.setItems(itemDtoList);

@@ -3,6 +3,7 @@ package com.example.demo.RestController;
 import com.example.demo.dto.ItemDto;
 import com.example.demo.entity.ItemEntity;
 import com.example.demo.service.ItemService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,8 +34,10 @@ public class ItemRestController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
     @PostMapping("/create")
-    public UUID createItem(@RequestBody ItemDto dto) throws IOException {
-        return itemService.createItem(dto);
+    public UUID createItem(@RequestParam("body") String str, @RequestParam("file") MultipartFile file) throws IOException {
+//        System.out.println(file.isEmpty());
+        ItemDto dto = new ObjectMapper().readValue(str, ItemDto.class);
+        return itemService.createItem(dto, file);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")

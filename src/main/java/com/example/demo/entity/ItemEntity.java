@@ -21,6 +21,7 @@ public class ItemEntity {
     private String info;
     private String name;
     private Integer price;
+    private String filename;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;

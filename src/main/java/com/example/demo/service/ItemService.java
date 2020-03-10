@@ -6,10 +6,12 @@ import com.example.demo.entity.ItemEntity;
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.repo.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ public class ItemService {
     @Autowired
     private CategoryRepo categoryRepo;
 
+    @Value("${upload.path}")
+    private String path;
     @Transactional
     public List<ItemDto> getItemList(){
         List<ItemEntity> items = itemRepo.findAll();
@@ -61,12 +65,25 @@ public class ItemService {
         return sample;
     }
     @Transactional
-    public UUID createItem(ItemDto dto) {
+    public UUID createItem(ItemDto dto, MultipartFile file) throws IOException {
         ItemEntity item = new ItemEntity();
         item.setName(dto.getName());
         item.setPrice(dto.getPrice());
         item.setInfo(dto.getInfo());
         item.setCount(dto.getCount());
+        System.out.println(path);
+        if (file != null){
+            File uploadDir = new File(path);
+            System.out.println(!uploadDir.exists());
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            file.transferTo(new File(uploadDir + "/" + resultFileName));
+            item.setFilename(resultFileName);
+        }
         item.setCategory(categoryRepo.findByName(dto.getCategory().getName()));
         ItemEntity sample = itemRepo.save(item);
         return sample.getId();

@@ -18,5 +18,4 @@ public class ItemDto {
     private String name;
     private Integer price;
     private CategoryDto category;
-    private byte[] image;
 }

@@ -22,6 +22,19 @@
             Category,
             foot,
             auth,
+        },
+        async created() {
+            let data = {
+                'name': "test",
+                'count': 50,
+                'price': 500,
+                'category': {
+                    'name': "sdfg"
+                },
+                'info': "test"
+            }
+            let response = await this.$http.post("http://localhost:9000/item/create", data)
+            console.log(response)
         }
     }
 
