@@ -1,9 +1,16 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.CartEntity;
 import com.example.demo.entity.Role;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -14,4 +21,5 @@ public class UserDto {
     private String password;
     private boolean active;
     private Role role;
+    private List<CartEntity> carts;
 }

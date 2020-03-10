@@ -28,7 +28,4 @@ public class ItemEntity {
 
     @OneToMany(mappedBy = "item")
     private List<CartItems> cart;
-
-    @Lob
-    private byte[] image;
 }

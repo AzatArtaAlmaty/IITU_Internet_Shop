@@ -20,7 +20,4 @@ public class Category {
     private String name;
     @OneToMany(mappedBy = "category", orphanRemoval = true)
     private List<ItemEntity> items;
-
-    @Lob
-    private byte[] image;
 }

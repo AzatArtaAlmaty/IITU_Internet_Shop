@@ -4,6 +4,8 @@ import com.example.demo.entity.ItemEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +14,5 @@ import java.util.UUID;
 public class CategoryDto {
     private UUID id;
     private String name;
-    private List<ItemDto> items;
-    private byte[] image;
+    private List<ItemEntity> items;
 }
