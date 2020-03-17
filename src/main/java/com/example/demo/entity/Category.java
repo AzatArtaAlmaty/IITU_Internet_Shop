@@ -18,6 +18,7 @@ public class Category {
     private UUID id;
     @Column(unique = true)
     private String name;
+    private String filename;
     @OneToMany(mappedBy = "category", orphanRemoval = true)
     private List<ItemEntity> items;
 }

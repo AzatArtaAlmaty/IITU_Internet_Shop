@@ -11,28 +11,30 @@ public class CategoryMapper {
     public static Category CatDtoInEntity(CategoryDto dto) {
         Category cat = new Category();
         cat.setName(dto.getName());
+        cat.setFilename(dto.getFilename());
         return cat;
     }
 
-    public static CategoryDto CatEntityInDto(Category dto, Boolean all) {
+    public static CategoryDto CatEntityInDto(Category dto) {
         CategoryDto cat = new CategoryDto();
         cat.setId(dto.getId());
         cat.setName(dto.getName());
-        if (all){
-            List<UUID> items = new ArrayList<>();
-            for (int i = 0; i < dto.getItems().size(); i++) {
-                Category each = new Category();
-                items.add(each.getId());
-            }
-            cat.setItems(items);
-        }
+        cat.setFilename(dto.getFilename());
+//        if (all){
+//            List<UUID> items = new ArrayList<>();
+//            for (int i = 0; i < dto.getItems().size(); i++) {
+//                Category each = new Category();
+//                items.add(each.getId());
+//            }
+//            cat.setItems(items);
+//        }
         return cat;
     }
 
-    public static List<CategoryDto> ListCatEntityInDto(List<Category> dtos, Boolean all) {
+    public static List<CategoryDto> ListCatEntityInDto(List<Category> dtos) {
         List<CategoryDto> cat = new ArrayList<>();
         for (int i = 0; i < dtos.size(); i++) {
-            cat.add(CatEntityInDto(dtos.get(i), all));
+            cat.add(CatEntityInDto(dtos.get(i)));
         }
         return cat;
     }

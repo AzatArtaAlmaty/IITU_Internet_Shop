@@ -31,21 +31,22 @@ public class ItemService {
     private String path;
 
     @Transactional
-    public List<ItemDto> getItemList(Boolean all){
+    public List<ItemDto> getItemList(){
         List<ItemEntity> items = itemRepo.findAll();
-        List<ItemDto> dtos = itemMapper.ListEntityInDto(items, all);
+        List<ItemDto> dtos = itemMapper.ListEntityInDto(items);
         return dtos;
     }
 
     @Transactional
-    public ItemDto getItem(UUID id, Boolean all) {
+    public ItemDto getItem(UUID id) {
         ItemEntity item = itemRepo.findById(id).get();
-        ItemDto sample = itemMapper.EntityInDto(item, all);
+        ItemDto sample = itemMapper.EntityInDto(item);
         return sample;
     }
     @Transactional
     public UUID createItem(ItemDto dto, MultipartFile file) throws IOException {
-        ItemEntity item = itemMapper.DtoInEntity(dto);
+
+        ItemEntity item = itemMapper.DtoInEntity(dto, categoryRepo.getOne(dto.getCategory()));
         System.out.println(path);
         if (file != null){
             File uploadDir = new File(path);

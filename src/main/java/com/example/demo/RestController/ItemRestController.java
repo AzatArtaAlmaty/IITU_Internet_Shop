@@ -22,14 +22,14 @@ public class ItemRestController {
 
     @PreAuthorize("permitAll()")
     @GetMapping("/getList")
-    public List<ItemDto> getItemList(@RequestParam Boolean all){
-        return itemService.getItemList(all);
+    public List<ItemDto> getItemList(){
+        return itemService.getItemList();
     }
 
     @PreAuthorize("permitAll()")
     @GetMapping("/get")
-    public ItemDto getItem(@RequestParam UUID id, @RequestParam Boolean all){
-        return itemService.getItem(id, all);
+    public ItemDto getItem(@RequestParam UUID id){
+        return itemService.getItem(id);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
