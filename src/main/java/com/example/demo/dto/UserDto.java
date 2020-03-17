@@ -11,15 +11,16 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
 public class UserDto {
-    private String id;
+    private UUID id;
     private String username;
     private String password;
     private boolean active;
     private Role role;
-    private List<CartEntity> carts;
+    private List<UUID> carts;
 }

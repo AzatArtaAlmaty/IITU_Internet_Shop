@@ -22,6 +22,6 @@ public class ItemDto {
     private String name;
     private Integer price;
     private String filename;
-    private Category category;
-    private List<CartItems> cart;
+    private UUID category;
+    private List<UUID> cart;
 }

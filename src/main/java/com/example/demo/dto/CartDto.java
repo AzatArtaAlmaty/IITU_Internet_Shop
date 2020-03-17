@@ -10,12 +10,13 @@ import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CartDto {
     private String id;
     private Integer cost;
-    private List<CartItems> items;
-    private UserEntity user;
+    private List<UUID> items;
+    private UUID user;
 }

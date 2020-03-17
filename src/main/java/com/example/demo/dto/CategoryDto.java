@@ -14,5 +14,5 @@ import java.util.UUID;
 public class CategoryDto {
     private UUID id;
     private String name;
-    private List<ItemEntity> items;
+    private List<UUID> items;
 }

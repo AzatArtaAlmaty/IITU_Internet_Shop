@@ -3,8 +3,10 @@ package com.example.demo.service;
 import com.example.demo.dto.CategoryDto;
 import com.example.demo.dto.ItemDto;
 import com.example.demo.entity.ItemEntity;
+import com.example.demo.mapper.itemMapper;
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.repo.ItemRepo;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,50 +29,23 @@ public class ItemService {
 
     @Value("${upload.path}")
     private String path;
+
     @Transactional
-    public List<ItemDto> getItemList(){
+    public List<ItemDto> getItemList(Boolean all){
         List<ItemEntity> items = itemRepo.findAll();
-        List<ItemDto> dtos = new ArrayList<>();
-        for (int i = 0; i < items.size(); i++) {
-            ItemEntity item = items.get(i);
-            ItemDto sample = new ItemDto();
-            sample.setId(item.getId());
-            sample.setCount(item.getCount());
-            sample.setInfo(item.getInfo());
-            CategoryDto categoryDto = new CategoryDto();
-            categoryDto.setName(item.getCategory().getName());
-            categoryDto.setId(item.getCategory().getId());
-            sample.setCategory(categoryDto);
-            sample.setName(item.getName());
-            sample.setPrice(item.getPrice());
-            dtos.add(sample);
-        }
+        List<ItemDto> dtos = itemMapper.ListEntityInDto(items, all);
         return dtos;
     }
 
     @Transactional
-    public ItemDto getItem(UUID id) {
+    public ItemDto getItem(UUID id, Boolean all) {
         ItemEntity item = itemRepo.findById(id).get();
-        ItemDto sample = new ItemDto();
-        sample.setId(item.getId());
-        sample.setCount(item.getCount());
-        sample.setInfo(item.getInfo());
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setName(item.getCategory().getName());
-        categoryDto.setId(item.getCategory().getId());
-        sample.setCategory(categoryDto);
-        sample.setName(item.getName());
-        sample.setPrice(item.getPrice());
-
+        ItemDto sample = itemMapper.EntityInDto(item, all);
         return sample;
     }
     @Transactional
     public UUID createItem(ItemDto dto, MultipartFile file) throws IOException {
-        ItemEntity item = new ItemEntity();
-        item.setName(dto.getName());
-        item.setPrice(dto.getPrice());
-        item.setInfo(dto.getInfo());
-        item.setCount(dto.getCount());
+        ItemEntity item = itemMapper.DtoInEntity(dto);
         System.out.println(path);
         if (file != null){
             File uploadDir = new File(path);
@@ -84,27 +59,31 @@ public class ItemService {
             file.transferTo(new File(uploadDir + "/" + resultFileName));
             item.setFilename(resultFileName);
         }
-        item.setCategory(categoryRepo.findByName(dto.getCategory().getName()));
         ItemEntity sample = itemRepo.save(item);
         return sample.getId();
     }
 
     @Transactional
-    public String itemImage(UUID id, MultipartFile image) throws IOException {
-        ItemEntity sample = itemRepo.findById(id).get();
-        sample.setImage(image.getBytes());
-        itemRepo.save(sample);
-        return "Success";
-    }
-
-    @Transactional
-    public void updateItem(ItemDto dto){
+    public void updateItem(ItemDto dto, MultipartFile file) throws IOException {
         ItemEntity item = itemRepo.findById(dto.getId()).get();
+        if (file != null) {
+            File uploadDir = new File(path);
+            System.out.println(!uploadDir.exists());
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            File oldFile = new File(uploadDir + "/" + item.getFilename());
+            oldFile.delete();
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            file.transferTo(new File(uploadDir + "/" + resultFileName));
+            item.setFilename(resultFileName);
+        }
         item.setName(dto.getName());
         item.setPrice(dto.getPrice());
         item.setInfo(dto.getInfo());
         item.setCount(dto.getCount());
-        item.setCategory(categoryRepo.findByName(dto.getCategory().getName()));
+        item.setCategory(categoryRepo.getOne(dto.getCategory()));
         itemRepo.save(item);
     }
 

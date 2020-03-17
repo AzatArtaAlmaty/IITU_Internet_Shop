@@ -19,18 +19,13 @@ public class CategoryRestController {
 
 
     @GetMapping("/all")
-    public List<CategoryDto> getAll(){
-        return categoryService.getCategoryList();
+    public List<CategoryDto> getAll(@RequestParam Boolean all){
+        return categoryService.getCategoryList(all);
     }
 
     @GetMapping("/get")
-    public CategoryDto geInfo(@RequestParam UUID id){
-        return categoryService.getInfo(id);
-    }
-
-    @GetMapping("/getByName")
-    public CategoryDto geInfoByName(@RequestParam String name){
-        return categoryService.getInfoByName(name);
+    public CategoryDto geInfo(@RequestParam UUID id, @RequestParam Boolean all){
+        return categoryService.getInfo(id, all);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
@@ -39,9 +34,4 @@ public class CategoryRestController {
         return categoryService.create(dto);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
-    @PostMapping("/categoryImage")
-    public String categoryImage(@RequestParam(value = "id") UUID id, @RequestPart(value = "image") MultipartFile image) throws IOException {
-        return categoryService.categoryImage(id, image);
-    }
 }

@@ -4,6 +4,8 @@ import com.example.demo.entity.Role;
 import com.example.demo.entity.UserEntity;
 import org.springframework.security.core.authority.AuthorityUtils;
 
+import java.util.UUID;
+
 public class CurrentUser extends org.springframework.security.core.userdetails.User {
 
     private UserEntity user;
@@ -18,7 +20,7 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
         return user;
     }
 
-    public String getId() {
+    public UUID getId() {
         return user.getId();
     }
 

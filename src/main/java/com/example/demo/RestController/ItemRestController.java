@@ -22,14 +22,14 @@ public class ItemRestController {
 
     @PreAuthorize("permitAll()")
     @GetMapping("/getList")
-    public List<ItemDto> getItemList(){
-        return itemService.getItemList();
+    public List<ItemDto> getItemList(@RequestParam Boolean all){
+        return itemService.getItemList(all);
     }
 
     @PreAuthorize("permitAll()")
     @GetMapping("/get")
-    public ItemDto getItem(@RequestParam UUID id){
-        return itemService.getItem(id);
+    public ItemDto getItem(@RequestParam UUID id, @RequestParam Boolean all){
+        return itemService.getItem(id, all);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
@@ -41,15 +41,10 @@ public class ItemRestController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
-    @PostMapping("/itemImage")
-    public String itemImage(@RequestParam(value = "id") UUID id, @RequestPart(value = "image") MultipartFile image) throws IOException {
-        return itemService.itemImage(id, image);
-    }
-
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
     @PostMapping("/update")
-    public void updateItem(@RequestBody ItemDto dto){
-        itemService.updateItem(dto);
+    public void updateItem(@RequestParam("body") String str, @RequestParam("file") MultipartFile file) throws IOException {
+        ItemDto dto = new ObjectMapper().readValue(str, ItemDto.class);
+        itemService.updateItem(dto, file);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
