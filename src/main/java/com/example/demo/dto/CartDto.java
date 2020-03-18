@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CartDto {
-    private String id;
+    private UUID id;
     private Integer cost;
     private List<UUID> items;
     private UUID user;

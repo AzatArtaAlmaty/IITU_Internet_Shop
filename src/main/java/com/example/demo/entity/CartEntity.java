@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,10 +16,9 @@ public class CartEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    @Column(nullable = false)
     private Integer cost;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
     private List<CartItems> items;
 
     @ManyToOne

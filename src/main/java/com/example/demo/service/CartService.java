@@ -3,11 +3,13 @@ package com.example.demo.service;
 import com.example.demo.dto.CartDto;
 import com.example.demo.entity.CartEntity;
 import com.example.demo.entity.CartItems;
+import com.example.demo.mapper.CartMapper;
 import com.example.demo.repo.CartItemRepo;
 import com.example.demo.repo.CartRepo;
 import com.example.demo.repo.ItemRepo;
 import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +35,7 @@ public class CartService {
     public void create(CartDto dto){
         CartEntity cart = new CartEntity();
         cart.setCost(dto.getCost());
-        cart.setUser(userRepo.getOne(dto.getId()));
+        cart.setUser(userRepo.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         cart = cartRepo.save(cart);
         List<CartItems> items = new ArrayList<>();
         for (int i = 0; i < dto.getItems().size(); i++) {
@@ -45,5 +47,19 @@ public class CartService {
         }
         cart.setItems(items);
         cartRepo.save(cart);
+    }
+
+    @Transactional(readOnly = false)
+    public CartDto get(UUID id) {
+        CartEntity sample = cartRepo.getOne(id);
+        CartDto dto = CartMapper.CartEntityInDto(sample);
+        return dto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<CartDto> getAll(){
+        List<CartEntity> sample = cartRepo.findAll();
+        List<CartDto> dtos = CartMapper.ListCartEntityInDto(sample);
+        return dtos;
     }
 }

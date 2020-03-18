@@ -48,7 +48,7 @@ public class ItemRestController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public void deleteItem(@RequestParam UUID id){
         itemService.deleteItem(id);
     }
