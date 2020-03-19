@@ -29,6 +29,7 @@ public class itemMapper {
         sample.setInfo(dto.getInfo());
         sample.setCount(dto.getCount());
         sample.setCategory(dto.getCategory().getId());
+        sample.setFilename(dto.getFilename());
 //        if (all) {
 //            List<UUID> ids = new ArrayList<>();
 //            for (int i = 0; i < dto.getCart().size(); i++) {

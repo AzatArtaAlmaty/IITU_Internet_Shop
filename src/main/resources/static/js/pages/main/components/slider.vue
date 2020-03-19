@@ -17,16 +17,16 @@
             <b-carousel-slide
                     caption="First slide"
                     text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-                    img-src="https://picsum.photos/1024/480/?image=52"
+                    img-src="http://localhost:9000/img/32797a3c-78ab-4b0a-a490-720cc888a5ee.Group 19.jpg"
             />
 
             <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-            <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-                    a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-                </p>
-            </b-carousel-slide>
+<!--            <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">-->
+<!--                <p>-->
+<!--                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt-->
+<!--                    a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.-->
+<!--                </p>-->
+<!--            </b-carousel-slide>-->
         </b-carousel>
     </div>
 </template>
