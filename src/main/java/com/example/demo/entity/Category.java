@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,9 +16,7 @@ public class Category {
     private UUID id;
     @Column(unique = true)
     private String name;
+    private String filename;
     @OneToMany(mappedBy = "category", orphanRemoval = true)
     private List<ItemEntity> items;
-
-    @Lob
-    private byte[] image;
 }
