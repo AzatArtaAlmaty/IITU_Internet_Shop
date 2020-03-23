@@ -88,6 +88,8 @@ public class ItemService {
 
     @Transactional
     public void deleteItem(UUID id){
+        File uploadDir = new File(path);
+        new File(uploadDir + "/" + itemRepo.getOne(id).getFilename()).delete();
         itemRepo.deleteById(id);
     }
 

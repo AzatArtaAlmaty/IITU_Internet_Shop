@@ -14,19 +14,9 @@ public class UserController {
     @Autowired
     private UserServiceImpl service;
 
-    private final String baseurl = "http://localhost:9000";
-
     @PostMapping("/create")
-    public RedirectView register(UserDto dto) {
+    public String register(UserDto dto) {
         boolean result = service.create(dto);
-        if (result) {
-            RedirectView redirectView = new RedirectView();
-            redirectView.setUrl(baseurl + "/admin");
-            return redirectView;
-        } else {
-            RedirectView redirectView = new RedirectView();
-            redirectView.setUrl(baseurl + "/login");
-            return redirectView;
-        }
+        return "redirect:/admin";
     }
 }

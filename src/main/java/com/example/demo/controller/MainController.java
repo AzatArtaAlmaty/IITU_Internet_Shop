@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
     @Autowired
     private ItemRepo repo;
-    @Value("${spring.profiles.active}")
+    @Value("${spring.profiles.active:prod}")
     private String profiles;
 
     private Logger logger = LoggerFactory.getLogger(MainController.class);

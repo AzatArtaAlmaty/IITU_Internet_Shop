@@ -97,6 +97,8 @@ public class CategoryService {
     }
 
     public void delete(UUID id) {
+        File uploadDir = new File(path);
+        new File(uploadDir + "/" + categoryRepo.getOne(id).getFilename()).delete();
         categoryRepo.deleteById(id);
     }
 

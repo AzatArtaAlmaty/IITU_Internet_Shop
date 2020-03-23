@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
@@ -26,13 +27,15 @@
     "@babel/preset-env": "^7.7.6",
     "babel-loader": "^8.0.6",
     "babel-preset-es2017": "^6.24.1",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.3.2",
     "vue-loader": "^15.7.2",
     "vue-style-loader": "^4.1.2",
     "vue-template-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
   },
   "presets": [
     "es2017",
