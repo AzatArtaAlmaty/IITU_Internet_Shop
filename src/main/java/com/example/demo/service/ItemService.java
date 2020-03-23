@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CategoryDto;
+
 import com.example.demo.dto.ItemDto;
 import com.example.demo.entity.ItemEntity;
 import com.example.demo.mapper.itemMapper;
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.repo.ItemRepo;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import jdk.nashorn.internal.objects.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ItemService {
@@ -90,7 +88,25 @@ public class ItemService {
 
     @Transactional
     public void deleteItem(UUID id){
+        File uploadDir = new File(path);
+        new File(uploadDir + "/" + itemRepo.getOne(id).getFilename()).delete();
         itemRepo.deleteById(id);
+    }
+
+    @Transactional
+    public List<ItemDto> search(String CatID, Integer before, Integer after){
+        System.out.println(CatID);
+        if (CatID != null)
+            if (!CatID.equals("undefined") && before != null && after != null && !CatID.equals(""))
+                return itemMapper.ListEntityInDto(itemRepo.findByCategoryAndPriceBetween(categoryRepo.getOne(UUID.fromString(CatID)), before, after));
+            else if (!CatID.equals("undefined"))
+                return itemMapper.ListEntityInDto(itemRepo.findByCategory(categoryRepo.getOne(UUID.fromString(CatID))));
+            else if (before != null && after != null)
+                return itemMapper.ListEntityInDto(itemRepo.findByPriceBetween(before, after));
+            else
+                return itemMapper.ListEntityInDto(itemRepo.findAll());
+        else
+            return itemMapper.ListEntityInDto(itemRepo.findAll());
     }
 
 }

@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,6 +16,7 @@ public class ItemEntity {
     private UUID id;
 
     private Integer count;
+    @Column(length = 1000)
     private String info;
     private String name;
     private Integer price;
