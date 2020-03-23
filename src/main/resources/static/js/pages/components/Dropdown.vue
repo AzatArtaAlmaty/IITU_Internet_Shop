@@ -110,10 +110,11 @@
         cursor: pointer;
     }
     .dropdown-menu1 {
+        position: absolute;
         z-index: 1000;
         float: left;
         padding: 5px 0;
-        width: 100%;
+        width: 94%;
         margin: 2px 0 0;
         list-style: none;
         font-size: 14px;

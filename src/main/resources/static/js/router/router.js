@@ -9,11 +9,13 @@ import cart from 'pages/cart/cart.vue'
 Vue.use(VueRouter)
 const routes = [
     { path: '/', component: App},
+    { path: '/cart', name: "cart", component: cart, props:true },
+    { path: '/cat', name: "cat", component: Category, props:true },
     // { path: '/CategoryInfo/:id', name: "CategoryInfo", component: CategoryInfo },
-    { path: '/login', name: "auth", component: auth },
-    { path: '/admin', name: "admin", component: admin },
-    { path: '/cart', name: "cart", component: cart },
-    { path: '/cat', name: "cat", component: Category },
+    // { path: '/login', name: "auth", component: auth },
+    // { path: '/admin', name: "admin", component: admin },
+    // { path: '/cart', name: "cart", component: cart },
+    // { path: '/cat', name: "cat", component: Category, props:true },
     // { path: '/404', name: '404', component: NotFound },
     // { path: '*', redirect: '/404'},
 ]

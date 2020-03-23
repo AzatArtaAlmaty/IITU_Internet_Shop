@@ -5,7 +5,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#"><span class="glyphicon glyphicon-search"></span></a>
+                        <router-link :to="{ name: 'cart', params: {items: this.SelectedItems } }"><span class="          ">cart</span></router-link>
                     </li>
                 </ul>
             </div>
@@ -16,10 +16,19 @@
 <script>
     export default {
         name: "navbar",
-        props: ["selectedItems"]
+        props: ["SelectedItems"]
     }
 </script>
 
 <style scoped>
+    a:hover {
+        color: white;
+        text-decoration: none;
+    }
 
+    a {
+        color: white;
+        text-decoration: none;
+        background-color: transparent;
+    }
 </style>

@@ -1,12 +1,10 @@
 <template>
     <div>
-        <navbar />
+        <navbar :SelectedItems="SelectedItems"/>
         <slider />
         <div class="container-fluid">
-            <Category />
-    <!--        <router-link to="/test">Перейти к Foo</router-link>-->
-            <PopularItems />
-
+            <Category :categories="categories" :button-click="buttonClick" :SelectedItems="SelectedItems"/>
+            <PopularItems :items="PopularItems" title="Популярые товары" :SelectedItems="SelectedItems" :buttonClick="buttonClick"/>
         </div>
         <foot />
     </div>
@@ -29,19 +27,27 @@
             foot,
             auth,
         },
-        // async created() {
-        //     let data = {
-        //         'name': "test",
-        //         'count': 50,
-        //         'price': 500,
-        //         'category': {
-        //             'name': "sdfg"
-        //         },
-        //         'info': "test"
-        //     }
-        //     let response = await this.$http.post("http://localhost:9000/item/create", data)
-        //     console.log(response)
-        // }
+        data(){
+            return {
+                categories: null,
+                PopularItems: null,
+                sliderFileName: null,
+                SelectedItems: []
+            }
+        },
+        async created() {
+            let response = await this.$http.get('http://localhost:9000/category/all');
+            this.categories = response.data;
+
+            response = await this.$http.get('http://localhost:9000/item/getList');
+            this.PopularItems = response.data;
+        },
+        methods: {
+            buttonClick(item) {
+                console.log(item, this.SelectedItems)
+                this.SelectedItems.push(item);
+            }
+        }
     }
 
 </script>

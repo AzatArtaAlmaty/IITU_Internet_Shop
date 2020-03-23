@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,5 +52,14 @@ public class ItemRestController {
     @GetMapping("/delete")
     public void deleteItem(@RequestParam UUID id){
         itemService.deleteItem(id);
+    }
+
+    @GetMapping("/search")
+    public List<ItemDto> search(@RequestParam(required = false) String cat, @RequestParam(required = false) String before, @RequestParam(required = false) String after){
+        try{
+            return  itemService.search(cat, Integer.parseInt(before), Integer.parseInt(after));
+        } catch (Exception e){
+            return  itemService.search(cat, null, null);
+        }
     }
 }
