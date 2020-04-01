@@ -6,7 +6,6 @@ import com.example.demo.entity.ItemEntity;
 import com.example.demo.mapper.itemMapper;
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.repo.ItemRepo;
-import jdk.nashorn.internal.objects.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
