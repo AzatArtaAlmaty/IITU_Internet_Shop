@@ -34,11 +34,11 @@
                 this.SelectedCategory = {name: '-'}
             }
             if (this.category != undefined) {
-                let response = await this.$http.get('http://seadev.kz/category/findItemByCategory?id=' + this.category.id);
+                let response = await this.$http.get('http://localhost:9000/category/findItemByCategory?id=' + this.category.id);
                 this.items = response.data;
             }
             else{
-                let response = await this.$http.get('http://seadev.kz/item/getList')
+                let response = await this.$http.get('http://localhost:9000/item/getList')
                 this.items = response.data;
             }
         },

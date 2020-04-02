@@ -39,13 +39,13 @@
                 this.selectedCategory = cat;
             },
             async search() {
-                let response = await this.$http.get('http://seadev.kz/item/search?cat=' + this.selectedCategory.id + '&before=' + this.ot + '&after=' + this.dO);
+                let response = await this.$http.get('http://localhost:9000/item/search?cat=' + this.selectedCategory.id + '&before=' + this.ot + '&after=' + this.dO);
                 this.changeItems(response.data)
             }
         },
         async created() {
             console.log(this.selectedCategory, this.category)
-            let response = await this.$http.get('http://seadev.kz/category/all');
+            let response = await this.$http.get('http://localhost:9000/category/all');
             this.categories.push({name: '-'});
             response.data.forEach(cat => {
                 this.categories.push(cat)

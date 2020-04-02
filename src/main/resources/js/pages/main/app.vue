@@ -36,10 +36,10 @@
             }
         },
         async created() {
-            let response = await this.$http.get('http://seadev.kz/category/all');
+            let response = await this.$http.get('http://localhost:9000/category/all');
             this.categories = response.data;
 
-            response = await this.$http.get('http://seadev.kz/item/getList');
+            response = await this.$http.get('http://localhost:9000/item/getList');
             this.PopularItems = response.data;
         },
         methods: {

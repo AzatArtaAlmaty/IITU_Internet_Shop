@@ -5,6 +5,7 @@ import Category from 'pages/FindByCategory/category.vue'
 import auth from 'pages/login/auth.vue'
 import admin from 'pages/admin/admin.vue'
 import cart from 'pages/cart/cart.vue'
+import checkout from 'pages/checkout/checkout.vue'
 
 Vue.use(VueRouter)
 const routes = [
@@ -18,6 +19,7 @@ const routes = [
     // { path: '/cat', name: "cat", component: Category, props:true },
     // { path: '/404', name: '404', component: NotFound },
     // { path: '*', redirect: '/404'},
+    { path: '/checkout', name: "checkout", component: checkout},
 ];
 
 export default new VueRouter({
