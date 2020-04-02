@@ -36,4 +36,5 @@ public class UserServiceImpl{
     public UserDto getCurrentUser(){
         return (UserDto) SecurityContextHolder.getContext().getAuthentication();
     }
+
 }

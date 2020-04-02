@@ -22,5 +22,6 @@ public class UserDto {
     private String password;
     private boolean active;
     private Role role;
+    private String token;
     private List<UUID> carts;
 }
