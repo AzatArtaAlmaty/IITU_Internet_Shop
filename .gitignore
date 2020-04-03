@@ -1,6 +1,9 @@
 HELP.md
 target/
 src/main/resources/application.properties
+storage
+node
+node_modules
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**

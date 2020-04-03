@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -20,35 +21,19 @@ import org.springframework.web.servlet.view.RedirectView;
 public class UserController {
     @Autowired
     private UserServiceImpl service;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    private CurrentUserDetailsService currentUserDetailsService;
 
     @PostMapping("/create")
-    public String register(UserDto dto) {
-        boolean result = service.create(dto);
-        return "redirect:/admin";
+    public Boolean register(UserDto dto) {
+//        service.create(dto);
+//        return "redirect:/admin";
+        return service.create(dto);
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserDto authenticationRequest) throws Exception {
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        CurrentUser userDetails = currentUserDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(token);
+    @ResponseBody
+    public String createAuthenticationToken(@RequestBody UserDto authenticationRequest) throws Exception {
+        return service.auth(authenticationRequest);
     }
-    private void authenticate(String username, String password) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-    }
+
 }
