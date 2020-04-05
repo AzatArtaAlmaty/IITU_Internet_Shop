@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.CartDto;
 import com.example.demo.entity.CartEntity;
 import com.example.demo.entity.CartItems;
+import com.example.demo.mapper.CartItemsMapper;
 import com.example.demo.mapper.CartMapper;
 import com.example.demo.repo.CartItemRepo;
 import com.example.demo.repo.CartRepo;
@@ -33,20 +34,12 @@ public class CartService {
 
     @Transactional(readOnly = false)
     public void create(CartDto dto){
-        CartEntity cart = new CartEntity();
-        cart.setCost(dto.getCost());
-        cart.setUser(userRepo.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        CartEntity cart = CartMapper.CartDtoInEntity(dto, userRepo.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         cart = cartRepo.save(cart);
-        List<CartItems> items = new ArrayList<>();
-        for (int i = 0; i < dto.getItems().size(); i++) {
-            CartItems sample = new CartItems();
-            sample.setItem(itemRepo.getOne(dto.getItems().get(i)));
-            sample.setCart(cart);
-            cartItemRepo.save(sample);
-            items.add(sample);
+        for(int i = 0; i < dto.getItems().size(); i++){
+            CartItems cartItems = CartItemsMapper.DtoInEntity(dto.getItems().get(i), cart, itemRepo.getOne(dto.getItems().get(i).getItem()));
+            cartItemRepo.save(cartItems);
         }
-        cart.setItems(items);
-        cartRepo.save(cart);
     }
 
     @Transactional(readOnly = false)
@@ -59,7 +52,11 @@ public class CartService {
     @Transactional(readOnly = true)
     public List<CartDto> getAll(){
         List<CartEntity> sample = cartRepo.findAll();
-        List<CartDto> dtos = CartMapper.ListCartEntityInDto(sample);
+        List<CartDto> dtos = new ArrayList<>();
+        for (int i = 0; i < sample.size(); i++) {
+            CartDto ent = CartMapper.CartEntityInDto(sample.get(i));
+            dtos.add(ent);
+        }
         return dtos;
     }
 }

@@ -19,7 +19,7 @@
                     text="Nulla vitae elit libero, a pharetra augue mollis interdum."
                     img-src="http://localhost:9000/img/32797a3c-78ab-4b0a-a490-720cc888a5ee.Group 19.jpg"
             />
-
+    
             <!-- Slide with blank fluid image to maintain slide aspect ratio -->
 <!--            <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">-->
 <!--                <p>-->

@@ -2,7 +2,7 @@
     <div>
         <navbar />
         <div class="container-fluid">
-            <shoppingList :items="items"/>
+            <shoppingList :items="items" :deleteItem="deleteItem"/>
         </div>
         <foot />
     </div>
@@ -16,7 +16,7 @@
         name: "cart",
         data() {
             return {
-                "items": this.$route.params.items
+                items: this.$route.params.items
             }
         },
         components: {
@@ -26,6 +26,11 @@
         },
         created() {
             console.log(this.items)
+        },
+        methods: {
+            deleteItem(item){
+                this.items.splice(this.items.findIndex(x => x === item), 1);
+            }
         }
     }
 </script>

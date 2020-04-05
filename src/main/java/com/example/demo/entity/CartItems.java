@@ -15,6 +15,8 @@ public class CartItems {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
+    private Integer count;
+
     @ManyToOne
     private CartEntity cart;
 

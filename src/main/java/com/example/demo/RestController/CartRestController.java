@@ -4,6 +4,7 @@ import com.example.demo.dto.CartDto;
 import com.example.demo.entity.CartEntity;
 import com.example.demo.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class CartRestController {
 
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
     public void createCart(@RequestBody CartDto dto) {
         service.create(dto);
     }
