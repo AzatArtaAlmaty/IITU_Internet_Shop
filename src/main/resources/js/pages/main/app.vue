@@ -39,13 +39,16 @@
             let response = await this.$http.get('http://localhost:9000/category/all');
             this.categories = response.data;
 
-            response = await this.$http.get('http://localhost:9000/item/getList');
+            response = await this.$http.get('http://localhost:9000/item/popular');
+            response.data.forEach(item => item.counter = 1)
+            console.log(response.data)
             this.PopularItems = response.data;
         },
         methods: {
             buttonClick(item) {
+                let newItem = Object.assign({}, item);
                 console.log(item, this.SelectedItems)
-                this.SelectedItems.push(item);
+                this.SelectedItems.push(newItem);
             }
         }
     }

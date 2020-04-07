@@ -62,4 +62,13 @@ public class ItemRestController {
             return  itemService.search(cat, null, null);
         }
     }
+
+    @GetMapping("/popular")
+    public List<ItemDto> popular(){
+        try{
+            return  itemService.getPopularItemList();
+        } catch (Exception e){
+            return  null;
+        }
+    }
 }

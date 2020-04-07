@@ -5,10 +5,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <router-link :to="{ name: 'cart', params: {items: this.SelectedItems } }"><img class="navbar-brand" src="http://localhost:9000/img/loop.svg" alt=""></router-link>
+                        <router-link :to="{ name: 'cart', params: {items: this.SelectedItems } }"><img class="navbar-brand" src="https://seadev.kz/img/loop.svg" alt=""></router-link>
                     </li>
                     <li class="nav-item active">
-                        <router-link :to="{ name: 'cart', params: {items: this.SelectedItems } }"><img class="navbar-brand" src="http://localhost:9000/img/Cart.svg" alt=""></router-link>
+                        <router-link :to="{ name: 'cart', params: {items: this.SelectedItems } }"><img class="navbar-brand" src="https://seadev.kz/img/Cart.svg" alt=""></router-link>
                     </li>
                 </ul>
             </div>

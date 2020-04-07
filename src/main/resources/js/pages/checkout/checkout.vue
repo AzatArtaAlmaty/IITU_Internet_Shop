@@ -12,31 +12,31 @@
                     </div>
                     <div v-if="!turn" class="d-inline-flex flex-wrap">
                         <div class="input-container mt-4 mr-5">
-                            <input type="text" required=""/>
+                            <input v-model="cart.lastName" type="text" required=""/>
                             <label>Фамилия</label>
                         </div>
                         <div class="input-container mt-4">
-                            <input type="text" required=""/>
+                            <input v-model="cart.firstName" type="text" required=""/>
                             <label>Имя</label>
                         </div>
                         <div class="input-container mt-4 mr-5">
-                            <input type="text" required=""/>
+                            <input v-model="cart.city" type="text" required=""/>
                             <label>Город</label>
                         </div>
                         <div class="input-container mt-4">
-                            <input type="text" required=""/>
+                            <input v-model="cart.region" type="text" required=""/>
                             <label>Регион</label>
                         </div>
                         <div class="input-container mt-4" style="width: 97%;">
-                            <input type="text" required=""/>
+                            <input v-model="cart.address" type="text" required=""/>
                             <label>Адрес</label>
                         </div>
                         <div class="input-container mt-4 mr-5">
-                            <input type="text" required=""/>
+                            <input v-model="cart.postIndex" type="text" required=""/>
                             <label>Почтовый индекс</label>
                         </div>
                         <div class="input-container mt-4">
-                            <input type="text" required=""/>
+                            <input v-model="cart.phone" type="text" required=""/>
                             <label>Номер телефона</label>
                         </div>
                     </div>
@@ -59,17 +59,17 @@
                         </div>
                     </div>
                     <div class="w-100 d-flex justify-content-center align-content-center m-5">
-                        <button @click="turn = !turn" class="btn btn-light">ПЕРЕЙТИ К ОПЛАТЕ</button>
+                        <button @click="click" class="btn btn-light">{{btnText}}</button>
                     </div>
                 </div>
                 <div class="w-50">
-                    <div class="d-flex flex-column justify-content-start align-content-start m-3" v-for="i in items" style="width: 80%; height: auto">
+                    <div class="d-flex flex-column justify-content-start align-content-start m-3" v-for="item in items" style="width: 80%; height: auto">
                         <div class="d-flex justify-content-start align-content-start">
-                            <div class="d-inline-flex mr-5"><img :src="'http://localhost:9000/img/' + i.filename" alt="Card image" style="width: 150px;"></div>
+                            <div class="d-inline-flex mr-5"><img :src="'https://seadev.kz/img/' + item.filename" alt="Card image" style="width: 150px;"></div>
                             <div class="d-flex justify-content-start align-content-start flex-wrap" style="color: black;">
-                                <div class="mr-4">{{i.name}}</div>
-                                <div>{{i.price}}</div>
-                                <div class="w-100 mt-3">Количество: <span @click="counterMinus(i)">-</span> {{counter}} <span @click="counter += 1">+</span></div>
+                                <div class="mr-4">{{item.name}}</div>
+                                <div>{{item.price}}</div>
+                                <div class="w-100 mt-3">Количество: <span @click="counterMinus(item)">-</span> {{ item.counter }} <span @click="item.counter += 1">+</span></div>
                             </div>
                         </div>
                         <hr class="w-100 mt-5" style="background-color: black;">
@@ -91,7 +91,19 @@
             return {
                 items: this.$route.params.items,
                 turn: false,
-                counter: 0
+                counter: 0,
+                btnText: "ПЕРЕЙТИ К ОПЛАТЕ",
+                cart: {
+                    cost: 0,
+                    firstName: "",
+                    lastName: "",
+                    address: "",
+                    phone: "",
+                    city: "",
+                    region: "",
+                    postIndex: "",
+                    items: []
+                }
             }
         },
         components: {
@@ -101,8 +113,28 @@
         },
         methods: {
             counterMinus(item) {
-                if (this.counter >= 2) this.counter -= 1;
+                if (item.counter >= 2) item.counter -= 1;
                 else this.items.splice(this.items.findIndex(x => x === item), 1);
+            },
+            async click() {
+                console.log(this.items)
+                this.turn = true
+                if (this.btnText === "ОПЛАТИТЬ") {
+                    let cost = 0;
+                    this.items.forEach(item => {
+                        cost += (item.price * item.counter)
+                        this.cart.items.push({"item": item.id, count: item.counter})
+                    });
+                    this.cart.cost = cost;
+                    console.log(this.cart)
+                    let res = await this.$http.post("http://localhost:9000/cart/create", this.cart)
+                    if (res.status === 200) {
+                        this.cart = {cost: 0, firstName: "", lastName: "", address: "", phone: "", city: "", region: "", postIndex: "", items: []}
+                        this.items = []
+                        this.turn = fal
+                    }
+                }
+                this.btnText = "ОПЛАТИТЬ"
             }
         }
     }

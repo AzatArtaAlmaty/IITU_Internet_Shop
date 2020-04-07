@@ -34,7 +34,7 @@ public class CartService {
 
     @Transactional(readOnly = false)
     public void create(CartDto dto){
-        CartEntity cart = CartMapper.CartDtoInEntity(dto, userRepo.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        CartEntity cart = CartMapper.CartDtoInEntity(dto); //userRepo.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName())
         cart = cartRepo.save(cart);
         for(int i = 0; i < dto.getItems().size(); i++){
             CartItems cartItems = CartItemsMapper.DtoInEntity(dto.getItems().get(i), cart, itemRepo.getOne(dto.getItems().get(i).getItem()));

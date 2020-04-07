@@ -18,5 +18,11 @@ public class CartDto {
     private UUID id;
     private Integer cost;
     private List<CartItemsDto> items;
-    private UUID user;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String phone;
+    private String city;
+    private String region;
+    private String postIndex;
 }

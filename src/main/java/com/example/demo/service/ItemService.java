@@ -1,9 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CategoryDto;
 import com.example.demo.dto.ItemDto;
+import com.example.demo.entity.CartItems;
 import com.example.demo.entity.ItemEntity;
 import com.example.demo.mapper.itemMapper;
+import com.example.demo.repo.CartItemRepo;
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.repo.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class ItemService {
 
     @Autowired
     private CategoryRepo categoryRepo;
+
+    @Autowired
+    private CartItemRepo cartItemRepo;
 
     @Value("${upload.path}")
     private String path;
@@ -44,10 +48,8 @@ public class ItemService {
     public UUID createItem(ItemDto dto, MultipartFile file) throws IOException {
 
         ItemEntity item = itemMapper.DtoInEntity(dto, categoryRepo.getOne(dto.getCategory()));
-        System.out.println(path);
         if (file != null){
             File uploadDir = new File(path);
-            System.out.println(!uploadDir.exists());
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
@@ -66,7 +68,6 @@ public class ItemService {
         ItemEntity item = itemRepo.findById(dto.getId()).get();
         if (file != null) {
             File uploadDir = new File(path);
-            System.out.println(!uploadDir.exists());
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
@@ -94,7 +95,6 @@ public class ItemService {
 
     @Transactional
     public List<ItemDto> search(String CatID, Integer before, Integer after){
-        System.out.println(CatID);
         if (CatID != null)
             if (!CatID.equals("undefined") && before != null && after != null && !CatID.equals(""))
                 return itemMapper.ListEntityInDto(itemRepo.findByCategoryAndPriceBetween(categoryRepo.getOne(UUID.fromString(CatID)), before, after));
@@ -106,6 +106,52 @@ public class ItemService {
                 return itemMapper.ListEntityInDto(itemRepo.findAll());
         else
             return itemMapper.ListEntityInDto(itemRepo.findAll());
+    }
+
+    @Transactional
+    public List<ItemDto> getPopularItemList(){
+        List<CartItems> items = cartItemRepo.findAll();
+        List<UUID> uuids = new ArrayList<>(Mode(items).keySet());
+        List<ItemEntity> item = new ArrayList<>();
+        for (int i = 0; i < uuids.size(); i++) {
+            item.add(itemRepo.getOne(uuids.get(i)));
+        }
+        List<ItemDto> dtos = itemMapper.ListEntityInDto(item);
+        return dtos;
+    }
+
+    private Map<UUID, Integer> Mode(List<CartItems> arr)
+    {
+        if (arr.size() == 0)
+            throw new IllegalArgumentException("Ошибка");
+
+        Map<UUID, Integer> map = new HashMap<>();
+        for (CartItems elem: arr) {
+            if (map.containsKey(elem.getItem().getId()))
+                map.put(elem.getItem().getId(), map.get(elem.getItem().getId()) + 1);
+
+            else
+                map.put(elem.getItem().getId(), 1);
+        }
+        return sortByValue(map);
+    }
+
+    private <K, V> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
+        Collections.sort(list, new Comparator<Object>() {
+            @SuppressWarnings("unchecked")
+            public int compare(Object o1, Object o2) {
+                return ((Comparable<V>) ((Map.Entry<K, V>) (o1)).getValue()).compareTo(((Map.Entry<K, V>) (o2)).getValue());
+            }
+        });
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Iterator<Map.Entry<K, V>> it = list.iterator(); it.hasNext();) {
+            Map.Entry<K, V> entry = (Map.Entry<K, V>) it.next();
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
     }
 
 }

@@ -28,7 +28,6 @@ public class StorageService {
         try {
             if (file != null){
                 File uploadDir = new File(path);
-                System.out.println(!uploadDir.exists());
                 if (!uploadDir.exists()) {
                     uploadDir.mkdir();
                 }
@@ -51,7 +50,6 @@ public class StorageService {
         try {
             if (file != null){
                 File uploadDir = new File(path);
-                System.out.println(!uploadDir.exists());
                 if (!uploadDir.exists()) {
                     uploadDir.mkdir();
                 }

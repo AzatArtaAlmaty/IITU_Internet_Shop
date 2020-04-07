@@ -19,7 +19,7 @@ public class CartRestController {
 
 
     @PostMapping("/create")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
     public void createCart(@RequestBody CartDto dto) {
         service.create(dto);
     }

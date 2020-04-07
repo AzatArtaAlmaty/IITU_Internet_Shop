@@ -4,10 +4,10 @@
             <div class="cat">
                 <div class="m-auto">Categories</div>
             </div>
-            <div class="m-auto mt-5 d-flex justify-content-center align-content-center flex-wrap mb-5" style="width: 50%;">
+            <div class="m-auto mt-5 d-flex justify-content-center align-content-center flex-wrap mb-5" style="width: 60%;">
                 <div class="card d-flex justify-content-center align-content-center m-2" v-for="i in categories" style="width: 150px; height: 150px;">
                     <router-link class="d-flex flex-column justify-content-center align-content-center" :to="{ name: 'cat', params: {category: i, buttonClick: buttonClick, SelectedItems: SelectedItems}}">
-                        <img :src="'http://localhost:9000/img/' + i.filename" alt="Card image" class="p-2 ml-4" style="width: 100px; height: 100px;">
+                        <img :src="'https://seadev.kz/img/' + i.filename" alt="Card image" class="p-2 ml-4" style="width: 100px; height: 100px;">
                         <div class="w-100 card-text d-inline-flex justify-content-center align-content-center mt-3" style="color: black;">{{i.name}}</div>
                     </router-link>
                 </div>

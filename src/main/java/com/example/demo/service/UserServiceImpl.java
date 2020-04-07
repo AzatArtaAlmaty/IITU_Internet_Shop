@@ -32,19 +32,19 @@ public class UserServiceImpl{
     @Autowired
     private CurrentUserDetailsService currentUserDetailsService;
 
-    public boolean create(UserDto form) {
+    public Boolean create(UserDto form) {
         UserEntity user = new UserEntity();
-//        System.out.println(form.getUsername() + " " + form.getPassword());
+        System.out.println(form.getUsername() + " " + form.getPassword());
         user.setUsername(form.getUsername());
         user.setPassword(passwordEncoder.encode(form.getPassword()));
         user.setRole(form.getRole());
         user.setActive(true);
         repo.save(user);
-        return true;
+        return Boolean.TRUE;
     }
 
     public String auth(UserDto authenticationRequest) throws Exception {
-        System.out.println(authenticationRequest.getUsername() + authenticationRequest.getPassword());
+//        System.out.println(authenticationRequest.getUsername() + authenticationRequest.getPassword());
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         CurrentUser userDetails = currentUserDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());

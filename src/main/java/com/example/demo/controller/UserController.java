@@ -10,13 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
@@ -24,14 +21,13 @@ public class UserController {
 
 
     @PostMapping("/create")
-    public Boolean register(UserDto dto) {
+    public Boolean register(@RequestBody UserDto dto) {
 //        service.create(dto);
 //        return "redirect:/admin";
         return service.create(dto);
     }
 
     @PostMapping("/auth")
-    @ResponseBody
     public String createAuthenticationToken(@RequestBody UserDto authenticationRequest) throws Exception {
         return service.auth(authenticationRequest);
     }

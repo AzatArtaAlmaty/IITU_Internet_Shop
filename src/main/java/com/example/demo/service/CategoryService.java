@@ -47,7 +47,6 @@ public class CategoryService {
         Category sample = CategoryMapper.CatDtoInEntity(dto);
         if (file != null){
             File uploadDir = new File(path);
-            System.out.println(!uploadDir.exists());
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
@@ -67,7 +66,6 @@ public class CategoryService {
         sample.setName(dto.getName());
         if (file != null){
             File uploadDir = new File(path);
-            System.out.println(!uploadDir.exists());
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }

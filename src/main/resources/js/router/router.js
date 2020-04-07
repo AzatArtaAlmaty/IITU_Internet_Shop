@@ -15,7 +15,7 @@ const routes = [
     { path: '/cat', name: "cat", component: Category, props:true },
     // { path: '/CategoryInfo/:id', name: "CategoryInfo", component: CategoryInfo },
     { path: '/login', name: "auth", component: auth },
-    { path: '/admin', name: "admin", component: admin },
+    // { path: '/admin', name: "admin", component: admin, props:true },
     // { path: '/cart', name: "cart", component: cart },
     // { path: '/cat', name: "cat", component: Category, props:true },
     { path: '/404', name: 'E404', component: NotFound },

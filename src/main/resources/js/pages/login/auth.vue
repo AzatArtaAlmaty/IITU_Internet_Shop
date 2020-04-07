@@ -7,7 +7,7 @@
                 <div class="container">
 
 
-                    <div class="row">
+                    <div class="row d-flex justify-content-center align-content-center">
                         <div class="col-sm-5">
 
                             <div class="form-box">
@@ -18,65 +18,17 @@
                                     </div>
                                 </div>
                                 <div class="form-bottom">
-                                    <form role="form" action="/login" method="post" class="login-form">
+                                    <div class="login-form">
                                         <div class="form-group">
                                             <label class="sr-only" for="username">Username</label>
-                                            <input type="text" name="username" placeholder="Username..." class="form-username form-control" id="username">
+                                            <input v-model="login" type="text" name="username" placeholder="Username..." class="form-username form-control" id="username">
                                         </div>
                                         <div class="form-group">
                                             <label class="sr-only" for="password">Password</label>
-                                            <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="password">
+                                            <input v-model="password" type="password" name="password" placeholder="Password..." class="form-password form-control" id="password">
                                         </div>
-                                        <button type="submit" class="btn">Sign in!</button>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-sm-1 middle-border"></div>
-                        <div class="col-sm-1"></div>
-
-                        <div class="col-sm-5">
-
-                            <div class="form-box">
-                                <div class="form-top">
-                                    <div class="form-top-left">
-                                        <h3>Sign up now</h3>
-                                        <p>Fill in the form below to get instant access:</p>
+                                        <button @click="click" class="btn">Sign in!</button>
                                     </div>
-                                </div>
-                                <div class="form-bottom">
-                                    <form role="form" action="/user/create" method="post" class="registration-form">
-                                        <div class="form-group">
-                                            <label class="sr-only" for="form-first-name">First name</label>
-                                            <input type="text" name="username" placeholder="USERNAME..." class="form-first-name form-control" id="form-first-name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="form-last-name">Last name</label>
-                                            <input type="text" name="password" placeholder="PASSWORD..." class="form-last-name form-control" id="form-last-name">
-                                        </div>
-<!--                                        <div class="form-group">-->
-<!--                                            <label class="sr-only" for="form-email">Email</label>-->
-<!--                                            <input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">-->
-<!--                                        </div>-->
-                                        <div class="form-group">
-                                            <label class="sr-only">About USER ROLE</label>
-                                            <div>
-                                                <input type="radio" name="role" placeholder="role..." id="form-role1" value="USER">
-                                                <label for="form-role1">Email</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" name="role" placeholder="role..." id="form-role2" value="ADMIN">
-                                                <label for="form-role2">ADMIN</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" name="role" placeholder="role..." id="form-role3" value="EDITOR">
-                                                <label for="form-role3">EDITOR</label>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn">Sign me up!</button>
-                                    </form>
                                 </div>
                             </div>
 
@@ -99,6 +51,27 @@
         components: {
             navbar,
             foot,
+        },
+        data() {
+            return {
+                login: "",
+                password: "",
+                local: {
+                    token: ""
+                }
+            }
+        },
+        methods: {
+            async click() {
+                let data = {
+                    "username": this.login,
+                    "password": this.password
+                }
+                data = await this.$http.post("http://localhost:9000/user/auth", data)
+                this.token = data.data
+                console.log(data)
+                if (data.status === 200) this.$router.push({ name: 'admin', params: { token: this.token }})
+            }
         }
     }
 </script>

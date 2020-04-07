@@ -20,6 +20,7 @@
     import foot from 'pages/components/foot.vue'
     export default {
         name: "admin",
+        props: ['token'],
         components: {
             navbar,
             ItemsList,

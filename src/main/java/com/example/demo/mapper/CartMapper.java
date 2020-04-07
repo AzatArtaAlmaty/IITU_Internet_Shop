@@ -13,11 +13,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class CartMapper {
-    public static CartEntity CartDtoInEntity(CartDto dto, UserEntity user) {
+    public static CartEntity CartDtoInEntity(CartDto dto) {
         CartEntity cart = new CartEntity();
         cart.setCost(dto.getCost());
-        System.out.println(cart.getCost());
-        cart.setUser(user);
+        cart.setAddress(dto.getAddress());
+        cart.setCity(dto.getCity());
+        cart.setFirstName(dto.getFirstName());
+        cart.setLastName(dto.getLastName());
+        cart.setRegion(dto.getRegion());
+        cart.setPhone(dto.getPhone());
+        cart.setPostIndex(dto.getPostIndex());
         return cart;
     }
 
@@ -25,7 +30,13 @@ public class CartMapper {
         CartDto cart = new CartDto();
         cart.setId(dto.getId());
         cart.setCost(dto.getCost());
-        cart.setUser(dto.getUser().getId());
+        cart.setAddress(dto.getAddress());
+        cart.setCity(dto.getCity());
+        cart.setFirstName(dto.getFirstName());
+        cart.setLastName(dto.getLastName());
+        cart.setRegion(dto.getRegion());
+        cart.setPhone(dto.getPhone());
+        cart.setPostIndex(dto.getPostIndex());
         cart.setItems(CartItemsMapper.ListEntityToDto(dto.getItems()));
         return cart;
     }

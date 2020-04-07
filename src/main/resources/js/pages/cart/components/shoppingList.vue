@@ -4,7 +4,7 @@
             <div class="m-auto mt-5 d-flex justify-content-center align-content-center flex-wrap mb-5" style="width: 100%;">
                 <div class="d-flex flex-column justify-content-start align-content-start m-3" v-for="i in items" style="width: 80%; height: auto">
                     <div class="d-flex justify-content-start align-content-start">
-                        <div class="d-inline-flex mr-5"><img :src="'http://localhost:9000/img/' + i.filename" alt="Card image"></div>
+                        <div class="d-inline-flex mr-5"><img :src="'https://seadev.kz/img/' + i.filename" alt="Card image"></div>
                         <div class="d-flex justify-content-start align-content-start flex-wrap" style="color: black;">
                             <div class="w-75">{{i.name}}</div>
                             <button @click="deleteItem(i)" class="btn krestik" type="reset" title="Click me to clear the input field">&times;</button>
