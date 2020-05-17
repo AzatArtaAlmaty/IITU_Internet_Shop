@@ -3,7 +3,7 @@
         <navbar />
         <div class="container-fluid">
             <div class="w-100 d-inline-flex justify-content-start align-content-center mt-5">
-                <div class="w-50 d-inline-flex ml-5 flex-wrap">
+                <div class="w-50 d-inline-flex ml-5 flex-wrap" style="height: 500px;">
                     <div class="w-100 d-inline-flex">
                         <div v-bind:class="{ nomer: !turn, nomer2: turn }" class="mr-3" align="center">1</div>
                         <div style="align-self: center;">ДОСТАВКА</div>
@@ -19,9 +19,14 @@
                             <input v-model="cart.firstName" type="text" required=""/>
                             <label>Имя</label>
                         </div>
-                        <div class="input-container mt-4 mr-5">
-                            <input v-model="cart.city" type="text" required=""/>
-                            <label>Город</label>
+                        <div class="input-container mr-5" style="margin-top: 12px;">
+                            <dropdown style="background: inherit; padding-left: 0px; margin-bottom: 0px;" class="w-100" :options="[{'name': 'Almaty'}, {'name': 'Astana'}]"
+                                      :selected="{'name': 'Almaty'}"
+                                      v-on:updateOption="methodToRunOnSelect"
+                                      :placeholder="'Select an Item'"
+                                      :closeOnOutsideClick="true">
+                            </dropdown>
+                            <hr style="margin-top: 0px;border-top: 1px solid #555;"></hr>
                         </div>
                         <div class="input-container mt-4">
                             <input v-model="cart.region" type="text" required=""/>
@@ -58,7 +63,7 @@
                             <label>CVV</label>
                         </div>
                     </div>
-                    <div class="w-100 d-flex justify-content-center align-content-center m-5">
+                    <div class="w-100 d-flex justify-content-center align-content-center m-5" style="height: 50px;">
                         <button @click="click" class="btn btn-light">{{btnText}}</button>
                     </div>
                 </div>
@@ -84,7 +89,8 @@
 <script>
     import navbar from 'pages/components/navbar.vue'
     import foot from 'pages/components/foot.vue'
-    import shoppingList from "pages/cart/components/shoppingList.vue";
+    import shoppingList from "pages/cart/components/shoppingList.vue"
+    import dropdown from 'pages/components/Dropdown.vue'
     export default {
         name: "checkout",
         data() {
@@ -110,8 +116,12 @@
             navbar,
             foot,
             shoppingList,
+            dropdown
         },
         methods: {
+            methodToRunOnSelect(cat) {
+                this.cart.city = cat.name;
+            },
             counterMinus(item) {
                 if (item.counter >= 2) item.counter -= 1;
                 else this.items.splice(this.items.findIndex(x => x === item), 1);
@@ -204,5 +214,9 @@
         color: #212529;
          background-color: inherit;
          border-color: inherit;
+    }
+
+    .dropdown-toggle1{
+        background: inherit;
     }
 </style>

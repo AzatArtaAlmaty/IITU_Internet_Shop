@@ -35,7 +35,7 @@ public class ItemRestController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
     @PostMapping("/create")
-    public UUID createItem(@RequestParam("body") String str, @RequestParam("file") MultipartFile file) throws IOException {
+    public UUID createItem(@RequestParam("body") String str, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
 //        System.out.println(file.isEmpty());
         ItemDto dto = new ObjectMapper().readValue(str, ItemDto.class);
         return itemService.createItem(dto, file);
@@ -43,9 +43,9 @@ public class ItemRestController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
     @PostMapping("/update")
-    public void updateItem(@RequestParam("body") String str, @RequestParam("file") MultipartFile file) throws IOException {
+    public UUID updateItem(@RequestParam("body") String str, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         ItemDto dto = new ObjectMapper().readValue(str, ItemDto.class);
-        itemService.updateItem(dto, file);
+        return itemService.updateItem(dto, file);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")

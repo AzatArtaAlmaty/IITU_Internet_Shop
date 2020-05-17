@@ -104,4 +104,9 @@ public class CategoryService {
         List<ItemDto> sample = itemMapper.ListEntityInDto(itemRepo.findByCategory(categoryRepo.getOne(id)));
         return sample;
     }
+
+    public CategoryDto findCatByName(String name) {
+        CategoryDto dto = CategoryMapper.CatEntityInDto(categoryRepo.findByName(name));
+        return dto;
+    }
 }

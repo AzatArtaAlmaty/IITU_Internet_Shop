@@ -13,7 +13,12 @@
                 <input type="text" class="form-control" placeholder="Enter Item price" name="price" v-model="price">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter Item Category Name" name="category" v-model="categoryName">
+                <dropdown :options="category"
+                          :selected="selectedCategory"
+                          v-on:updateOption="methodToRunOnSelect"
+                          :placeholder="'Select an Item'"
+                          :closeOnOutsideClick="true">
+                </dropdown>
             </div>
             <div class="form-group">
                 <textarea v-model="info" class="form-control" placeholder="info" name="info"/>
@@ -29,18 +34,27 @@
 </template>
 
 <script>
+    import dropdown from 'pages/components/Dropdown.vue'
     export default {
         name: "CreateForm",
-        props: ['items'],
+        props: ['items', 'token'],
+        components: {
+            dropdown
+        },
         data() {
             return{
                 name: '',
                 count: '',
                 price: '',
-                categoryName: '',
+                category: '',
                 info: '',
-                image: ''
+                image: '',
+                selectedCategory: '',
             }
+        },
+        async created() {
+            let resp = await this.$http.get('http://localhost:9000/category/all');
+            this.category = resp.data;
         },
         methods: {
             fileChange(event) {
@@ -48,32 +62,22 @@
                 this.image = event.target.files[0]
             },
             CreateItem: async function() {
-                let data = {
+                let catId = await this.$http.get('http://localhost:9000/category/findCatByName?name' + this.categoryName)
+                let json = {
                     'name': this.name,
                     'count': this.count,
                     'price': this.price,
-                    'category': {
-                        'name': this.categoryName
-                    },
+                    'category': this.selectedCategory.id,
                     'info': this.info
                 }
-                let response = await this.$http.post("http://localhost:9000/item/create", data)
-                console.log(response)
-                if (response['status'] === 200) {
-                    data['id'] = response['data']
-                    this.items.push(data)
-                    this.name = ''
-                    this.count = ''
-                    this.price = ''
-                    this.categoryName = ''
-                    this.info = ''
-                }
-                console.log(response)
-                data = new FormData();
-                data.append('id', response['data']);
+                let data = new FormData();
+                data.append('body', json);
                 data.append('image', this.image);
-                this.$http.post("http://localhost:9000/item/itemImage", data, {'headers': {'Content-Type': 'multipart/form-data'}})
-            }
+                this.$http.post("http://localhost:9000/item/create", data, {'headers': {'Content-Type': 'multipart/form-data', Authorization: "Bearer " + this.token}})
+            },
+            methodToRunOnSelect(cat) {
+                this.selectedCategory = cat;
+            },
         }
     }
 </script>

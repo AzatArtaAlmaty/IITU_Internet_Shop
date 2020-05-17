@@ -47,8 +47,8 @@
         methods: {
             buttonClick(item) {
                 let newItem = Object.assign({}, item);
-                console.log(item, this.SelectedItems)
                 this.SelectedItems.push(newItem);
+                console.log(item, this.SelectedItems)
             }
         }
     }

@@ -1,43 +1,39 @@
 <template>
-    <div>
+    <div style="background-image: url('http://localhost:9000/img/Union.jpg')">
         <navbar />
-        <div class="top-content">
-
-            <div class="inner-bg">
-                <div class="container">
-
-
-                    <div class="row d-flex justify-content-center align-content-center">
-                        <div class="col-sm-5">
-
-                            <div class="form-box">
-                                <div class="form-top">
-                                    <div class="form-top-left">
-                                        <h3>Login to our site</h3>
-                                        <p>Enter username and password to log on:</p>
-                                    </div>
-                                </div>
-                                <div class="form-bottom">
-                                    <div class="login-form">
-                                        <div class="form-group">
-                                            <label class="sr-only" for="username">Username</label>
-                                            <input v-model="login" type="text" name="username" placeholder="Username..." class="form-username form-control" id="username">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="password">Password</label>
-                                            <input v-model="password" type="password" name="password" placeholder="Password..." class="form-password form-control" id="password">
-                                        </div>
-                                        <button @click="click" class="btn">Sign in!</button>
-                                    </div>
-                                </div>
-                            </div>
-
+        <div class="bg">
+            <div class="top-content">
+                <div class="inner-bg">
+                    <div class="hello">
+                        <div class="img-hello">
                         </div>
                     </div>
-
+                    <div class="container bg-warning" style="width:65%; box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 5px 4px 8px rgba(0, 0, 0, 0.04);">
+                        <div class="col-5 p-5 ml-4">
+                            <h2>Войти как Админ</h2>
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Username</label>
+                                    <input v-model="login" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <input v-model="password" type="password" class="form-control" id="exampleInputPassword1">
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Запомнить</label>
+                                </div>
+                                <router-link class="text-decoration-none " :to="{name: 'login'}">
+                                    <div class="w-100 d-inline-flex justify-content-center align-content-center mt-3 mb-3" style="color: black;">
+                                        <input @click="click" type="button" class="btn btn-warning btnP" value="ВОЙТИ">
+                                    </div>
+                                </router-link>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
         <foot />
     </div>
@@ -66,18 +62,23 @@
                 let data = {
                     "username": this.login,
                     "password": this.password
-                }
-                data = await this.$http.post("http://localhost:9000/user/auth", data)
-                this.token = data.data
+                };
                 console.log(data)
-                if (data.status === 200) this.$router.push({ name: 'admin', params: { token: this.token }})
+                try {
+                    data = await this.$http.post("http://localhost:9000/user/auth", data);
+                    this.token = data.data;
+                    console.log(data);
+                    if (data.status === 200) this.$router.push({ name: 'admin', params: { token: this.token }})
+                } catch (e) {
+                    alert("login failed")
+                    this.$router.push({ name: 'auth'})
+                }
             }
         }
     }
 </script>
 
 <style scoped>
-
     input[type="text"],
     input[type="password"],
     textarea,
@@ -231,7 +232,7 @@
     .btn-link-2:active, .btn-link-2:active:focus { outline: 0; opacity: 0.6; background: rgba(0, 0, 0, 0.3); color: #fff; }
 
 
-    /***** Top content *****/
+    /** Top content **/
 
     .inner-bg {
         padding: 60px 0 80px 0;
@@ -308,7 +309,7 @@
     }
 
 
-    /***** Footer *****/
+    /** Footer **/
 
     footer {
         padding-bottom: 70px;
@@ -324,7 +325,7 @@
     footer a:hover, footer a:focus { border-bottom: 1px dotted #19b9e7; }
 
 
-    /***** Media queries *****/
+    /** Media queries **/
 
     @media (min-width: 992px) and (max-width: 1199px) {}
 
@@ -340,6 +341,27 @@
 
         h1, h2 { font-size: 32px; }
 
+    }
+
+    .bg {
+        background-image: url('http://localhost:9000/img/Union.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 120%;
+    }
+
+    .hello {
+        position: absolute;
+        width: 25%;
+        height: 65%;
+        margin-top:-1%;
+        margin-left: 53%;
+
+        background-image: url('http://localhost:9000/img/Group.jpg');
+        background-size: 100% 100%;
+        border: 1px solid #000000;
+        box-sizing: border-box;
+        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 6px rgba(0, 0, 0, 0.04), -10px 16px 24px rgba(0, 0, 0, 0.06);
     }
 
 

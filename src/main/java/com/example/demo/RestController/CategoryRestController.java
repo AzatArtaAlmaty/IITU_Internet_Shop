@@ -39,7 +39,7 @@ public class CategoryRestController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EDITOR')")
     @PostMapping("/update")
-    public UUID update(@RequestParam("body") String str, @RequestParam("file") MultipartFile file) throws IOException {
+    public UUID update(@RequestParam("body") String str, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         CategoryDto dto = new ObjectMapper().readValue(str, CategoryDto.class);
         return categoryService.update(dto, file);
     }
@@ -53,5 +53,10 @@ public class CategoryRestController {
     @GetMapping("/findItemByCategory")
     public List<ItemDto> findItemByCategory(@RequestParam UUID id) {
         return categoryService.findItemByCategory(id);
+    }
+
+    @GetMapping("/findCatByName")
+    public CategoryDto findCatByName(@RequestParam String name) {
+        return categoryService.findCatByName(name);
     }
 }

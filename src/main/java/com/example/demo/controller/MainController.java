@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ItemEntity;
 import com.example.demo.repo.ItemRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.IOException;
+
 @Controller
 public class MainController {
     @Autowired
@@ -17,10 +18,10 @@ public class MainController {
     @Value("${spring.profiles.active:prod}")
     private String profiles;
 
-    private Logger logger = LoggerFactory.getLogger(MainController.class);
+    private     Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    @GetMapping("/")
-    public String index(Model model){
+    @GetMapping(value = "/")
+    public String index(Model model) throws IOException {
         model.addAttribute("isDevMode", "dev".equals(profiles));
         return "index";
     }

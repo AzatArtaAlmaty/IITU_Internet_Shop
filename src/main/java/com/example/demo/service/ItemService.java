@@ -64,7 +64,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void updateItem(ItemDto dto, MultipartFile file) throws IOException {
+    public UUID updateItem(ItemDto dto, MultipartFile file) throws IOException {
         ItemEntity item = itemRepo.findById(dto.getId()).get();
         if (file != null) {
             File uploadDir = new File(path);
@@ -84,6 +84,7 @@ public class ItemService {
         item.setCount(dto.getCount());
         item.setCategory(categoryRepo.getOne(dto.getCategory()));
         itemRepo.save(item);
+        return item.getId();
     }
 
     @Transactional

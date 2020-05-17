@@ -15,9 +15,10 @@
         >
             <!-- Text slides with image -->
             <b-carousel-slide
-                    caption="First slide"
-                    text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-                    img-src="https://seadev.kz/img/32797a3c-78ab-4b0a-a490-720cc888a5ee.Group 19.jpg"
+                    img-src="http://localhost:9000/img/32797a3c-78ab-4b0a-a490-720cc888a5ee.Group 19.jpg"
+            />
+            <b-carousel-slide
+                    img-src="http://localhost:9000/img/photo_2020-04-07_21-58-00.jpg"
             />
     
             <!-- Slide with blank fluid image to maintain slide aspect ratio -->

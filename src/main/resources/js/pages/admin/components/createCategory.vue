@@ -19,6 +19,7 @@
 <script>
     export default {
         name: "createCategory",
+        props: ['token'],
         data() {
             return {
                 name: "",
@@ -40,19 +41,10 @@
                 // event.target.files[0] = ''
             },
             CreateCategory: async function () {
-                let data = {
-                    "name": this.name
-                }
-                let response = await this.$http.post("http://localhost:9000/category/create", data)
-                console.log(response['data'])
-                data.id = response['data']
-                this.categories.push(data)
-                this.name = ''
-                console.log(response)
-                data = new FormData();
-                data.append('id', response['data']);
+                let data = new FormData();
+                data.append('body', {"name": this.name});
                 data.append('image', this.image);
-                this.$http.post("http://localhost:9000/category/categoryImage", data, {'headers': {'Content-Type': 'multipart/form-data'}})
+                this.$http.post("http://localhost:9000/category/create", data, {'headers': {'Content-Type': 'multipart/form-data', Authorization: "Bearer " + this.token}})
             },
         }
     }

@@ -35,10 +35,12 @@
             }
             if (this.category != undefined) {
                 let response = await this.$http.get('http://localhost:9000/category/findItemByCategory?id=' + this.category.id);
+                response.data.forEach(item => item.counter = 1)
                 this.items = response.data;
             }
             else{
                 let response = await this.$http.get('http://localhost:9000/item/getList')
+                response.data.forEach(item => item.counter = 1)
                 this.items = response.data;
             }
         },

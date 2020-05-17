@@ -32,6 +32,12 @@
                 placeholderText: 'Please select an item',
             }
         },
+        watch: {
+            selected: function (val) {
+                if (val !== undefined)
+                    this.selectedOption = val;
+            }
+        },
         props: {
             options: {
                 type: [Array, Object]
@@ -106,7 +112,7 @@
         overflow: hidden;
     }
     .dropdown-toggle1:hover {
-        background: #e1e1e1;
+        background: white;
         cursor: pointer;
     }
     .dropdown-menu1 {

@@ -7,13 +7,15 @@
             <div class="m-auto mt-5 d-flex justify-content-center align-content-center flex-wrap mb-5" style="width: 50%;">
                 <div class="card d-flex justify-content-center align-content-center m-2" v-for="i in items" style="width: 140px; height: auto;">
 <!--                    <router-link class="d-flex flex-column justify-content-center align-content-center" :to="{ name: 'CategoryInfo', params: {id: i.id } }">-->
-                        <img :src="'https://seadev.kz/img/' + i.filename" alt="Card image" style="width: 100%">
+                        <img :src="'http://localhost:9000/img/' + i.filename" alt="Card image" style="width: 100%">
                         <div class="w-100 card-text d-inline-flex justify-content-center align-content-center mt-3" style="color: black;">{{i.price}} KZT</div>
                         <div class="w-100 card-text1 d-inline-flex justify-content-center align-content-center mt-3" style="color: black;">{{i.name}}</div>
                         <div class="w-100 d-inline-flex justify-content-center align-content-center mt-3 mb-3" style="color: black;">
+                            <input @click="divClick(i)" type="button" class="btn btn-warning btnP" value="Подробнее">
+                        </div>
+                        <div class="w-100 d-inline-flex justify-content-center align-content-center mb-3" style="color: black;">
                             <input @click="eventClick(i)" type="button" class="btn btn-warning btnP" value="В КОРЗИНУ">
                         </div>
-<!--                    </router-link>-->
                 </div>
             </div>
         </div>
@@ -23,10 +25,13 @@
 <script>
     export default {
         name: "PopularItems",
-        props: ['items', 'title', 'buttonClick'],
+        props: ['items', 'title', 'buttonClick', 'SelectedItems'],
         methods: {
             eventClick(item) {
                 this.buttonClick(item);
+            },
+            divClick(item) {
+                this.$router.push({ name: 'Description', params: { item: item, buttonClick: this.buttonClick, SelectedItems: this.SelectedItems } })
             }
         }
     }

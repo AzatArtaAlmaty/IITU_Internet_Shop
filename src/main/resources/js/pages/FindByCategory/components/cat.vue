@@ -40,12 +40,14 @@
             },
             async search() {
                 let response = await this.$http.get('http://localhost:9000/item/search?cat=' + this.selectedCategory.id + '&before=' + this.ot + '&after=' + this.dO);
+                response.data.forEach(item => item.counter = 1)
                 this.changeItems(response.data)
             }
         },
         async created() {
             console.log(this.selectedCategory, this.category)
             let response = await this.$http.get('http://localhost:9000/category/all');
+            response.data.forEach(item => item.counter = 1)
             this.categories.push({name: '-'});
             response.data.forEach(cat => {
                 this.categories.push(cat)

@@ -3,9 +3,9 @@
         <navbar />
         <div class="container-fluid mb-5 mt-5">
             <div class="row">
-                <ItemsList :items="items" />
-                <CreateForm :items="items"/>
-                <create-category />
+                <ItemsList :items="items"/>
+                <CreateForm :items="items" :token="token"/>
+<!--                <create-category />-->
             </div>
         </div>
         <foot />
@@ -19,7 +19,7 @@
     import CreateCategory from 'pages/admin/components/createCategory.vue'
     import foot from 'pages/components/foot.vue'
     export default {
-        name: "admin",
+        name: "rgbh",
         props: ['token'],
         components: {
             navbar,
@@ -29,17 +29,19 @@
             foot,
         },
         data() {
-            return { items: [] }
+            return {
+                items: [],
+            }
         },
-        created() {
-            const params = new URLSearchParams();
-            params.append('id', '' + this.id);
+        async created() {
             this.$http.get('http://localhost:9000/item/getList')
-                .then(response => {
+                .then(async response => {
                     console.log(response)
-                    response['data'].forEach(item => {
+                    for (const item of response.data) {
+                        let resp = await this.$http.get('http://localhost:9000/category/get?id=' + item.category);
+                        item.category = resp.data;
                         this.items.push(item)
-                    })
+                    }
                 });
         }
     }
